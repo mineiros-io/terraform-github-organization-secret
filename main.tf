@@ -1,5 +1,19 @@
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# THIS IS A UPPERCASE MAIN HEADLINE
-# And it continues with some lowercase information about the module
-# We might add more than one line for additional information
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+resource "github_actions_organization_secret" "secret" {
+  count = var.module_enabled && var.skip_secret_creation == false ? 1 : 0
+
+  depends_on = [var.module_depends_on]
+
+  secret_name     = var.secret_name
+  encrypted_value = var.encrypted_value
+  plaintext_value = var.plaintext_value
+  visiblity       = var.visiblity
+}
+
+resource "github_actions_organization_secret_repositories" "repositories" {
+  count = var.module_enabled && var.repositories != null ? local.repositories : tomap({})
+
+  depends_on = [var.module_depends_on]
+
+  secret_name             = var.skip_secret_creation ? var.secret_name : github_actions_organization_secret.secret[0].secret_name
+  selected_repository_ids = var.selected_repository_ids
+}
