@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------------------------------------------------
 
 variable "skip_secret_creation" {
-  description = "(Optional) Wehter you want to skip creating secret or not."
+  description = "(Optional) Set to false to skip creation of the secret resource."
   type        = bool
   default     = false
 }
@@ -44,7 +44,6 @@ variable "selected_repository_ids" {
 # ----------------------------------------------------------------------------------------------------------------------
 # MODULE CONFIGURATION PARAMETERS
 # These variables are used to configure the module.
-# See https://medium.com/mineiros/the-ultimate-guide-on-how-to-write-terraform-modules-part-1-81f86d31f024
 # ----------------------------------------------------------------------------------------------------------------------
 
 variable "module_enabled" {

@@ -4,24 +4,16 @@
 # The purpose is to activate everything the module offers, but trying to keep execution time and costs minimal.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-variable "aws_region" {
-  description = "(Optional) The AWS region in which all resources will be created."
-  type        = string
-  default     = "us-east-1"
-}
-
 terraform {
   required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.0"
+    github = {
+      source  = "integrations/github"
+      version = "~> 4.10"
     }
   }
 }
 
-provider "aws" {
-  region = var.aws_region
-}
+provider "github" {}
 
 # DO NOT RENAME MODULE NAME
 module "test" {
