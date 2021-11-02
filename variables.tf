@@ -3,17 +3,12 @@
 # These variables must be set when using this module.
 # ----------------------------------------------------------------------------------------------------------------------
 
-variable "skip_secret_creation" {
-  description = "(Optional) Set to false to skip creation of the secret resource."
-  type        = bool
-  default     = false
-}
 variable "secret_name" {
   description = "(Required) Name of the secret."
   type        = string
 }
 
-variable "visiblity" {
+variable "visibility" {
   description = "(Required) Configures the access that repositories have to the organization secret. Must be one of all, private, selected. selected_repository_ids is required if set to selected."
   type        = string
 }
@@ -23,6 +18,11 @@ variable "visiblity" {
 # These variables have defaults, but may be overridden.
 # ----------------------------------------------------------------------------------------------------------------------
 
+variable "skip_secret_creation" {
+  description = "(Optional) Set to false to skip creation of the secret resource."
+  type        = bool
+  default     = false
+}
 variable "encrypted_value" {
   description = "(Optional) Encrypted value of the secret using the Github public key in Base64 format."
   type        = string

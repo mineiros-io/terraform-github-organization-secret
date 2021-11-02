@@ -21,7 +21,7 @@ module "test" {
 
   # add only required arguments and no optional arguments
 
-  secret_name = "example_secret_name_complete"
+  secret_name = "example_secret_name_minimal"
   visibility  = "private"
 }
 

@@ -6,7 +6,7 @@ resource "github_actions_organization_secret" "secret" {
   secret_name     = var.secret_name
   encrypted_value = var.encrypted_value
   plaintext_value = var.plaintext_value
-  visiblity       = var.visiblity
+  visibility      = var.visibility
 }
 
 resource "github_actions_organization_secret_repositories" "repositories" {
