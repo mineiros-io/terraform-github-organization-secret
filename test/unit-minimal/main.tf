@@ -4,32 +4,25 @@
 # The purpose is to test all defaults for optional arguments and just provide the required arguments.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-variable "aws_region" {
-  description = "(Optional) The AWS region in which all resources will be created."
-  type        = string
-  default     = "us-east-1"
-}
-
 terraform {
   required_providers {
-    aws = {
-      source = "hashicorp/aws"
-      # always test with exact version to catch unsupported blocks/arguments early
-      # this should match the minimal version in versions.tf
-      version = "3.0.0"
+    github = {
+      source  = "integrations/github"
+      version = "~> 4.10"
     }
   }
 }
 
-provider "aws" {
-  region = var.aws_region
-}
+provider "github" {}
 
 # DO NOT RENAME MODULE NAME
 module "test" {
   source = "../.."
 
   # add only required arguments and no optional arguments
+
+  secret_name = "example_secret_name_complete"
+  visibility  = "private"
 }
 
 # outputs generate non-idempotent terraform plans so we disable them for now unless we need them.

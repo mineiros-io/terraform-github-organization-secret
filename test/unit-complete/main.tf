@@ -23,7 +23,12 @@ module "test" {
 
   # add all required arguments
 
+  secret_name = "example_secret_name_complete"
+  visibility  = "private"
+
   # add all optional arguments that create additional resources
+
+  plaintext_value = "plain-test"
 
   # add most/all other optional arguments
 
