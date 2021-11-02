@@ -10,7 +10,7 @@ resource "github_actions_organization_secret" "secret" {
 }
 
 resource "github_actions_organization_secret_repositories" "repositories" {
-  count = var.module_enabled && var.repositories != null ? local.repositories : tomap({})
+  count = var.module_enabled && var.repositories != null ? var.repositories : tomap({})
 
   depends_on = [var.module_depends_on]
 
