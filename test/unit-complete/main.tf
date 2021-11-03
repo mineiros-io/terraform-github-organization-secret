@@ -28,7 +28,8 @@ module "test" {
 
   # add all optional arguments that create additional resources
 
-  plaintext_value = "plain-test"
+  plaintext_value         = "plain-test"
+  selected_repository_ids = ["mineiros-io/terraform-github-repository"]
 
   # add most/all other optional arguments
 
