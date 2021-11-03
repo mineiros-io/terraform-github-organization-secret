@@ -32,10 +32,6 @@ module "test" {
 
   # add most/all other optional arguments
 
-  module_tags = {
-    Environment = "unknown"
-  }
-
   module_depends_on = ["nothing"]
 }
 

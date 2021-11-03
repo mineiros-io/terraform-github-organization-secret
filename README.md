@@ -84,20 +84,6 @@ See [variables.tf] and [examples/] for details and use-cases.
   Specifies whether resources in the module will be created.
   Default is `true`.
 
-- **`module_tags`**: _(Optional `map(string)`)_
-
-  A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be
-  overwritten by resource-specific tags.
-  Default is `{}`.
-
-  Example:
-  ```hcl
-  module_tags = {
-    environment = "staging"
-    team        = "platform"
-  }
-  ```
-
 - **`module_depends_on`**: _(Optional `list(dependencies)`)_
 
   A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
@@ -169,10 +155,6 @@ The following attributes are exported in the outputs of the module:
 - **`module_enabled`**
 
   Whether this module is enabled.
-
-- **`module_tags`**
-
-  The map of tags that are being applied to all created resources that accept tags.
 
 ## External Documentation
 
