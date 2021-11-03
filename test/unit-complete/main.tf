@@ -28,7 +28,7 @@ module "test" {
   # add all required arguments
 
   secret_name = "example_secret_name_complete"
-  visibility  = "private"
+  visibility  = "selected"
 
   # add all optional arguments that create additional resources
 
