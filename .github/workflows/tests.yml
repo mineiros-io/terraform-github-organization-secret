@@ -8,8 +8,8 @@ on:
   pull_request:
 
 env:
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.MINEIROS_TESTING_AWS_SECRET_ACCESS_KEY }}
-  AWS_ACCESS_KEY_ID: ${{ secrets.MINEIROS_TESTING_AWS_ACCESS_KEY_ID }}
+  GITHUB_OWNER: ${{ secrets.TEST_GITHUB_ORGANIZATION }}
+  GITHUB_TOKEN: ${{ secrets.TEST_GITHUB_TOKEN }}
 
 concurrency:
   group: main
