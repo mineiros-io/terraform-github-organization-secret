@@ -21,8 +21,9 @@ module "test" {
 
   # add only required arguments and no optional arguments
 
-  secret_name = "example_secret_name_minimal"
-  visibility  = "private"
+  secret_name          = "example_secret_name_minimal"
+  visibility           = "private"
+  skip_secret_creation = true
 }
 
 # outputs generate non-idempotent terraform plans so we disable them for now unless we need them.

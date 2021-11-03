@@ -9,7 +9,7 @@ variable "secret_name" {
 }
 
 variable "visibility" {
-  description = "(Required) Configures the access that repositories have to the organization secret. Must be one of all, private, selected. selected_repository_ids is required if set to selected."
+  description = "(Required) Configures the access that repositories have to the organization secret. Must be one of all, private, selected."
   type        = string
 }
 
@@ -19,7 +19,7 @@ variable "visibility" {
 # ----------------------------------------------------------------------------------------------------------------------
 
 variable "skip_secret_creation" {
-  description = "(Optional) Set to false to skip creation of the secret resource."
+  description = "(Optional) Set to true to skip creation of the secret resource."
   type        = bool
   default     = false
 }
@@ -38,7 +38,7 @@ variable "plaintext_value" {
 variable "selected_repository_ids" {
   description = "(Optional) An array of repository ids that can access the organization secret."
   type        = set(string)
-  default     = null
+  default     = []
 }
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -50,12 +50,6 @@ variable "module_enabled" {
   type        = bool
   description = "(Optional) Whether to create resources within the module or not."
   default     = true
-}
-
-variable "module_tags" {
-  type        = map(string)
-  description = "(Optional) A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be overwritten by resource-specific tags."
-  default     = {}
 }
 
 variable "module_depends_on" {
