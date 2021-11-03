@@ -33,7 +33,7 @@ module "test" {
   # add all optional arguments that create additional resources
 
   plaintext_value         = "plain-test"
-  selected_repository_ids = [data.github_repository.repo.repo_id]
+  #selected_repository_ids = [data.github_repository.repo.repo_id]
 
   # add most/all other optional arguments
 
