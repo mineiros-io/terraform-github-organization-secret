@@ -32,8 +32,8 @@ module "test" {
 
   # add all optional arguments that create additional resources
 
-  plaintext_value = "plain-test"
-  #selected_repository_ids = [data.github_repository.repo.repo_id]
+  plaintext_value         = "plain-test"
+  selected_repository_ids = [data.github_repository.repo.repo_id]
 
   # add most/all other optional arguments
 
@@ -45,7 +45,3 @@ module "test" {
 #   description = "All outputs of the module."
 #   value       = module.test
 # }
-
-output "secret_name" {
-  value = module.test.secret_name
-}

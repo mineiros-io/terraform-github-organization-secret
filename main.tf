@@ -17,7 +17,3 @@ resource "github_actions_organization_secret_repositories" "repositories" {
   secret_name             = var.skip_secret_creation ? var.secret_name : github_actions_organization_secret.secret[0].secret_name
   selected_repository_ids = var.selected_repository_ids
 }
-
-output "secret_name" {
-  value = github_actions_organization_secret.secret[0].secret_name
-}
