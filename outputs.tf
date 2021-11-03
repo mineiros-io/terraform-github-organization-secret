@@ -13,7 +13,7 @@ output "secret" {
 
 output "repositories" {
   description = "All attributes of the created `github_actions_organization_secret_repositories` resource."
-  value       = try(github_actions_organization_secret_repositories.repositories, null)
+  value       = one(github_actions_organization_secret.secret)
 }
 
 # ----------------------------------------------------------------------------------------------------------------------
