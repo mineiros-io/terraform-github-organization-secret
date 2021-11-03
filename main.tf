@@ -12,8 +12,8 @@ resource "github_actions_organization_secret" "secret" {
 resource "github_actions_organization_secret_repositories" "repositories" {
   count = var.module_enabled && length(var.selected_repository_ids) > 0 ? 1 : 0
 
-  depends_on = [var.module_depends_on]
+  depends_on = [var.module_depends_on, github_actions_organization_secret.secret]
 
-  secret_name             = var.skip_secret_creation ? var.secret_name : github_actions_organization_secret.secret[0].secret_name
+  secret_name             = var.secret_name
   selected_repository_ids = var.selected_repository_ids
 }
