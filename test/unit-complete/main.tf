@@ -15,6 +15,10 @@ terraform {
 
 provider "github" {}
 
+data "github_repository" "repo" {
+  full_name = "mineiros-io/terraform-github-repository"
+}
+
 # DO NOT RENAME MODULE NAME
 module "test" {
   source = "../.."
@@ -29,7 +33,7 @@ module "test" {
   # add all optional arguments that create additional resources
 
   plaintext_value         = "plain-test"
-  selected_repository_ids = ["mineiros-io/terraform-github-repository"]
+  selected_repository_ids = [data.github_repository.repo.repo_id]
 
   # add most/all other optional arguments
 
