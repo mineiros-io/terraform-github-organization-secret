@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - master
+      - main
   pull_request:
     branches:
       - master
+      - main
 
 jobs:
   pre-commit:
@@ -29,4 +31,3 @@ jobs:
         env:
           GITHUB_OWNER: ${{ secrets.TEST_GITHUB_ORGANIZATION }}
           GITHUB_TOKEN: ${{ secrets.TEST_GITHUB_TOKEN }}
-          
