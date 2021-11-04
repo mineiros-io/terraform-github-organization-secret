@@ -1,19 +1,12 @@
-name: Tests
+name: CI/CD Pipeline
 
 on:
   push:
     branches:
-      - main
       - master
   pull_request:
-
-env:
-  GITHUB_OWNER: ${{ secrets.TEST_GITHUB_ORGANIZATION }}
-  GITHUB_TOKEN: ${{ secrets.TEST_GITHUB_TOKEN }}
-
-concurrency:
-  group: main
-  cancel-in-progress: false
+    branches:
+      - master
 
 jobs:
   pre-commit:
@@ -36,3 +29,4 @@ jobs:
         env:
           GITHUB_OWNER: ${{ secrets.TEST_GITHUB_ORGANIZATION }}
           GITHUB_TOKEN: ${{ secrets.TEST_GITHUB_TOKEN }}
+          
