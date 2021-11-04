@@ -19,17 +19,9 @@ module "repository" {
   source  = "mineiros-io/repository/github"
   version = "~> 0.10.0"
 
-  name               = "test-terraform-github-repository"
+  name               = "test-terraform-github-organization-secret-complete"
   license_template   = "apache-2.0"
   gitignore_template = "Terraform"
-}
-
-output "repo_full_name" {
-  value = module.repository.full_name
-}
-
-data "github_repository" "repo" {
-  full_name = module.repository.full_name
 }
 
 # DO NOT RENAME MODULE NAME
@@ -46,15 +38,9 @@ module "test" {
   # add all optional arguments that create additional resources
 
   plaintext_value         = "plain-test"
-  selected_repository_ids = [data.github_repository.repo.repo_id]
+  selected_repository_ids = [module.repository.repository.repo_id]
 
   # add most/all other optional arguments
 
   module_depends_on = ["nothing"]
 }
-
-# outputs generate non-idempotent terraform plans so we disable them for now unless we need them.
-# output "all" {
-#   description = "All outputs of the module."
-#   value       = module.test
-# }
