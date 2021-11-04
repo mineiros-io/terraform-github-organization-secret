@@ -16,7 +16,7 @@ terraform {
 provider "github" {}
 
 data "github_repository" "repo" {
-  full_name = "mineiros-io/terraform-github-repository"
+  full_name = "terraform-github-repository"
 }
 
 # DO NOT RENAME MODULE NAME
