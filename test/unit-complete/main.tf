@@ -15,8 +15,17 @@ terraform {
 
 provider "github" {}
 
+module "repository" {
+  source  = "mineiros-io/repository/github"
+  version = "~> 0.10.0"
+
+  name               = "test-terraform-github-repository"
+  license_template   = "apache-2.0"
+  gitignore_template = "Terraform"
+}
+
 data "github_repository" "repo" {
-  full_name = "terraform-github-repository"
+  full_name = module.repository.full_name
 }
 
 # DO NOT RENAME MODULE NAME
