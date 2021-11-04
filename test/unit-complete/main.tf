@@ -24,6 +24,10 @@ module "repository" {
   gitignore_template = "Terraform"
 }
 
+output "repo_full_name" {
+  value = module.repository.full_name
+}
+
 data "github_repository" "repo" {
   full_name = module.repository.full_name
 }
