@@ -11,9 +11,6 @@ func TestUnitComplete(t *testing.T) {
 
 	terraformOptions := &terraform.Options{
 		TerraformDir: "unit-complete",
-		Vars: map[string]interface{}{
-			"aws_region": "us-east-1",
-		},
 		Upgrade: true,
 	}
 

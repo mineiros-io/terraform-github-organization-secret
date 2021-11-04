@@ -4,24 +4,16 @@
 # The purpose is to verify no resources are created when the module is disabled.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-variable "aws_region" {
-  description = "(Optional) The AWS region in which all resources will be created."
-  type        = string
-  default     = "us-east-1"
-}
-
 terraform {
   required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.0"
+    github = {
+      source  = "integrations/github"
+      version = "~> 4.16"
     }
   }
 }
 
-provider "aws" {
-  region = var.aws_region
-}
+provider "github" {}
 
 # DO NOT RENAME MODULE NAME
 module "test" {
@@ -30,6 +22,8 @@ module "test" {
   module_enabled = false
 
   # add all required arguments
+
+  secret_name = "example_secret_name_disabled"
 
   # add all optional arguments that create additional resources
 }

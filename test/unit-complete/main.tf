@@ -4,23 +4,27 @@
 # The purpose is to activate everything the module offers, but trying to keep execution time and costs minimal.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-variable "aws_region" {
-  description = "(Optional) The AWS region in which all resources will be created."
-  type        = string
-  default     = "us-east-1"
-}
-
 terraform {
   required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.0"
+    github = {
+      source  = "integrations/github"
+      version = "~> 4.16"
     }
   }
 }
 
-provider "aws" {
-  region = var.aws_region
+provider "github" {}
+
+module "repository" {
+  source  = "mineiros-io/repository/github"
+  version = "~> 0.10.0"
+
+  name = "test-complete-terraform-github-organization-secret"
+
+  archive_on_destroy = false
+
+  license_template   = "apache-2.0"
+  gitignore_template = "Terraform"
 }
 
 # DO NOT RENAME MODULE NAME
@@ -31,19 +35,15 @@ module "test" {
 
   # add all required arguments
 
+  secret_name = "example_secret_name_complete"
+  visibility  = "selected"
+
   # add all optional arguments that create additional resources
+
+  plaintext_value         = "plain-test"
+  selected_repository_ids = [module.repository.repository.repo_id]
 
   # add most/all other optional arguments
 
-  module_tags = {
-    Environment = "unknown"
-  }
-
   module_depends_on = ["nothing"]
 }
-
-# outputs generate non-idempotent terraform plans so we disable them for now unless we need them.
-# output "all" {
-#   description = "All outputs of the module."
-#   value       = module.test
-# }
