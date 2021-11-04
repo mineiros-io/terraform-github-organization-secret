@@ -19,7 +19,10 @@ module "repository" {
   source  = "mineiros-io/repository/github"
   version = "~> 0.10.0"
 
-  name               = "test-terraform-github-organization-secret-complete"
+  name = "test-complete-terraform-github-organization-secret"
+
+  archive_on_destroy = false
+
   license_template   = "apache-2.0"
   gitignore_template = "Terraform"
 }
@@ -39,6 +42,25 @@ module "test" {
 
   plaintext_value         = "plain-test"
   selected_repository_ids = [module.repository.repository.repo_id]
+
+  # add most/all other optional arguments
+
+  module_depends_on = ["nothing"]
+}
+
+module "test2" {
+  source = "../.."
+
+  module_enabled = true
+
+  # add all required arguments
+
+  secret_name = "example_secret_name_complete2"
+  visibility  = "private"
+
+  # add all optional arguments that create additional resources
+
+  plaintext_value = "plain-test"
 
   # add most/all other optional arguments
 
