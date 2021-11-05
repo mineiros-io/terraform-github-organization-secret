@@ -35,31 +35,7 @@ to manage GitHub Organizations following best practices.
 
 ## Module Features
 
-In contrast to the plain `terraform_resource` resource this module has better features.
-While all security features can be disabled as needed best practices
-are pre-configured.
-
-<!--
-These are some of our custom features:
-
-- **Default Security Settings**:
-  secure by default by setting security to `true`, additional security can be added by setting some feature to `enabled`
-
-- **Standard Module Features**:
-  Cool Feature of the main resource, tags
-
-- **Extended Module Features**:
-  Awesome Extended Feature of an additional related resource,
-  and another Cool Feature
-
-- **Additional Features**:
-  a Cool Feature that is not actually a resource but a cool set up from us
-
-- _Features not yet implemented_:
-  Standard Features missing,
-  Extended Features planned,
-  Additional Features planned
--->
+This module supports to create an github orginzations secret or assign repositories to an existing organization secret that has visibility set to `selected`.
 
 ## Getting Started
 
@@ -68,6 +44,8 @@ Most basic usage just setting required arguments:
 ```hcl
 module "terraform-github-organization-secret" {
   source = "git@github.com:mineiros-io/terraform-github-organization-secret.git?ref=v0.0.1"
+
+  secret_name = "sososecret"
 }
 ```
 
@@ -84,20 +62,6 @@ See [variables.tf] and [examples/] for details and use-cases.
   Specifies whether resources in the module will be created.
   Default is `true`.
 
-- **`module_tags`**: _(Optional `map(string)`)_
-
-  A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be
-  overwritten by resource-specific tags.
-  Default is `{}`.
-
-  Example:
-  ```hcl
-  module_tags = {
-    environment = "staging"
-    team        = "platform"
-  }
-  ```
-
 - **`module_depends_on`**: _(Optional `list(dependencies)`)_
 
   A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
@@ -111,52 +75,6 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 #### Main Resource Configuration
 
-<!-- Example of a required variable:
-
-- **`name`**: **_(Required `string`)_**
-
-  The name of the resource.
-  Default is `true`.
-
--->
-
-<!-- Example of an optional variable:
-
-- **`name`**: _(Optional `string`)_
-
-  The name of the resource.
-  Default is `true`.
-
--->
-
-<!-- Example of an object:
-     - We use inline documentation to describe complex objects or lists/maps of complex objects.
-     - Please indent each level with 2 spaces so the documentation is rendered in a readable way.
-
-- **`user`**: _(Optional `object(user)`)_
-
-  A user object.
-  Default is `true`.
-
-  A/Each `user` object can have the following fields:
-
-  - **`name`**: **_(Required `string`)_**
-
-    The Name of the user.
-
-  - **`description`**: _(Optional `decription`)_
-
-    A description describing the user in more detail.
-    Default is "".
-
-  Example
-  ```hcl
-  user = {
-    name        = "marius"
-    description = "The guy from Berlin."
-  }
-  ```
--->
 
 
 
@@ -169,10 +87,6 @@ The following attributes are exported in the outputs of the module:
 - **`module_enabled`**
 
   Whether this module is enabled.
-
-- **`module_tags`**
-
-  The map of tags that are being applied to all created resources that accept tags.
 
 ## External Documentation
 

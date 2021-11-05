@@ -11,9 +11,6 @@ func TestUnitMinimal(t *testing.T) {
 
 	terraformOptions := &terraform.Options{
 		TerraformDir: "unit-minimal",
-		Vars: map[string]interface{}{
-			"aws_region": "us-east-1",
-		},
 		Upgrade: true,
 	}
 

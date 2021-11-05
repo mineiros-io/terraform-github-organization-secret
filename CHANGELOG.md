@@ -11,9 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Implement support for `xyz` resource
-- Document the usage of the module in README.md
-- Document the usage of examples
+- Implement support for `github_actions_organization_secret` resource
+- Implement support for `github_actions_organization_secret_repositories` resource
 - Add unit tests for basic use cases
 
 <!-- markdown-link-check-disable -->

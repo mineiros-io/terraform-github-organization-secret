@@ -9,6 +9,9 @@ module "terraform-github-organization-secret" {
 
   # All required module arguments
 
+  secret_name = "example_secret_name"
+  visibility  = "private"
+
   # none
 
   # All optional module arguments set to the default values
@@ -27,9 +30,16 @@ module "terraform-github-organization-secret" {
 # EXAMPLE PROVIDER CONFIGURATION
 # ----------------------------------------------------------------------------------------------------------------------
 
-provider "aws" {
-  version = "~> 3.0"
+terraform {
+  required_providers {
+    github = {
+      source  = "integrations/github"
+      version = "~> 4.16"
+    }
+  }
 }
+
+provider "github" {}
 
 # ----------------------------------------------------------------------------------------------------------------------
 # ENVIRONMENT VARIABLES:
