@@ -1,30 +1,33 @@
-[<img src="https://raw.githubusercontent.com/mineiros-io/brand/3bffd30e8bdbbde32c143e2650b2faa55f1df3ea/mineiros-primary-logo.svg" width="400"/>][homepage]
+[<img src="https://raw.githubusercontent.com/mineiros-io/brand/3bffd30e8bdbbde32c143e2650b2faa55f1df3ea/mineiros-primary-logo.svg" width="400"/>](https://mineiros.io/?ref=terraform-github-organization-secret)
 
-[![Build Status][badge-build]][build-status]
-[![GitHub tag (latest SemVer)][badge-semver]][releases-github]
-[![Terraform Version][badge-terraform]][releases-terraform]
-[![Github Provider Version][badge-tf-gh]][releases-github-provider]
-[![Join Slack][badge-slack]][slack]
+[![Build Status](https://github.com/mineiros-io/terraform-github-organization-secret/workflows/Tests/badge.svg)](https://github.com/mineiros-io/terraform-github-organization-secret/actions)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/mineiros-io/terraform-github-organization-secret.svg?label=latest&sort=semver)](https://github.com/mineiros-io/terraform-github-organization-secret/releases)
+[![Terraform Version](https://img.shields.io/badge/Terraform-1.x-623CE4.svg?logo=terraform)](https://github.com/hashicorp/terraform/releases)
+[![Github Provider Version](https://img.shields.io/badge/GH-4-F8991D.svg?logo=terraform)](https://github.com/terraform-providers/terraform-provider-github/releases)
+[![Join Slack](https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack)](https://mineiros.io/slack)
 
 # terraform-github-organization-secret
 
-A [Terraform] module that acts as a wrapper around the Terraform
-[GitHub provider](https://www.terraform.io/docs/providers/github/index.html) and offers a more convenient and tested way
-to manage GitHub Organizations following best practices.
+A [Terraform] module for creating and managing
+[Github Actions secrets](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/actions_organization_secret)
+on [Github](https://github.com/).
 
-**_This module supports Terraform v1.x and is compatible with the Official Terraform GitHub Provider v4.x from `integrations/github`._**
+**_This module supports Terraform version 1
+and is compatible with the Terraform Github Provider version 4._**
 
-**Attention: This module is incompatible with the Hashicorp GitHub Provider! The latest version of this module supporting `hashicorp/github` provider is `~> 0.6.0`**
+This module is part of our Infrastructure as Code (IaC) framework
+that enables our users and customers to easily deploy and manage reusable,
+secure, and production-grade cloud infrastructure.
+
 
 - [Module Features](#module-features)
 - [Getting Started](#getting-started)
 - [Module Argument Reference](#module-argument-reference)
-  - [Top-level Arguments](#top-level-arguments)
-    - [Module Configuration](#module-configuration)
-    - [Main Resource Configuration](#main-resource-configuration)
-    - [Extended Resource Configuration](#extended-resource-configuration)
-- [Module Attributes Reference](#module-attributes-reference)
+  - [Main Resource Configuration](#main-resource-configuration)
+  - [Module Configuration](#module-configuration)
+- [Module Outputs](#module-outputs)
 - [External Documentation](#external-documentation)
+  - [Terraform Github Provider Documentation](#terraform-github-provider-documentation)
 - [Module Versioning](#module-versioning)
   - [Backwards compatibility in `0.0.z` and `0.y.z` version](#backwards-compatibility-in-00z-and-0yz-version)
 - [About Mineiros](#about-mineiros)
@@ -35,17 +38,20 @@ to manage GitHub Organizations following best practices.
 
 ## Module Features
 
-This module supports to create an github orginzations secret or assign repositories to an existing organization secret that has visibility set to `selected`.
+This module implements the following Terraform resources
+
+- `github_actions_organization_secret`
+- `github_actions_organization_secret_repositories`
 
 ## Getting Started
 
-Most basic usage just setting required arguments:
+Most common usage of the module:
 
 ```hcl
 module "terraform-github-organization-secret" {
   source = "git@github.com:mineiros-io/terraform-github-organization-secret.git?ref=v0.0.1"
 
-  secret_name = "sososecret"
+  secret_name = "name"
 }
 ```
 
@@ -53,45 +59,88 @@ module "terraform-github-organization-secret" {
 
 See [variables.tf] and [examples/] for details and use-cases.
 
-### Top-level Arguments
+### Main Resource Configuration
 
-#### Module Configuration
+- [**`secret_name`**](#var-secret_name): *(**Required** `string`)*<a name="var-secret_name"></a>
 
-- **`module_enabled`**: _(Optional `bool`)_
+  Name of the secret.
+
+- [**`skip_secret_creation`**](#var-skip_secret_creation): *(Optional `bool`)*<a name="var-skip_secret_creation"></a>
+
+  Set to true to skip creation of the secret resource.
+
+  Default is `false`.
+
+- [**`visibility`**](#var-visibility): *(Optional `string`)*<a name="var-visibility"></a>
+
+  Configures the access that repositories have to the organization
+  secret. Must be one of all, private, selected.
+
+  Default is `"selected"`.
+
+- [**`encrypted_value`**](#var-encrypted_value): *(Optional `string`)*<a name="var-encrypted_value"></a>
+
+  Encrypted value of the secret using the Github public key in
+  Base64 format.
+
+- [**`plaintext_value`**](#var-plaintext_value): *(Optional `string`)*<a name="var-plaintext_value"></a>
+
+  Plaintext value of the secret to be encrypted.
+
+- [**`selected_repository_ids`**](#var-selected_repository_ids): *(Optional `set(string)`)*<a name="var-selected_repository_ids"></a>
+
+  An array of repository ids that can access the organization secret.
+  Required visibility to be set to `selected`
+
+  Default is `[]`.
+
+### Module Configuration
+
+- [**`module_enabled`**](#var-module_enabled): *(Optional `bool`)*<a name="var-module_enabled"></a>
 
   Specifies whether resources in the module will be created.
+
   Default is `true`.
 
-- **`module_depends_on`**: _(Optional `list(dependencies)`)_
+- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(dependency)`)*<a name="var-module_depends_on"></a>
 
-  A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
+  A list of dependencies.
+  Any object can be _assigned_ to this list to define a hidden external dependency.
+
+  Default is `[]`.
 
   Example:
+
   ```hcl
   module_depends_on = [
-    aws_vpc.vpc
+    null_resource.name
   ]
   ```
 
-#### Main Resource Configuration
-
-
-
-
-#### Extended Resource Configuration
-
-## Module Attributes Reference
+## Module Outputs
 
 The following attributes are exported in the outputs of the module:
 
-- **`module_enabled`**
+- [**`secret`**](#output-secret): *(`object(secret)`)*<a name="output-secret"></a>
+
+  All attributes of the created `github_actions_organization_secret`
+  resource.
+
+- [**`repositories`**](#output-repositories): *(`object(repositories)`)*<a name="output-repositories"></a>
 
   Whether this module is enabled.
 
+- [**`module_enabled`**](#output-module_enabled): *(`bool`)*<a name="output-module_enabled"></a>
+
+  All attributes of the created
+  `github_actions_organization_secret_repositories` resource.
+
 ## External Documentation
 
-- Terraform Github Provider Documentation:
-  - https://www.terraform.io/docs/providers/github/index.html
+### Terraform Github Provider Documentation
+
+- https://registry.terraform.io/providers/integrations/github/latest/docs/resources/actions_organization_secret
+- https://registry.terraform.io/providers/integrations/github/latest/docs/resources/actions_environment_secret
 
 ## Module Versioning
 
@@ -110,14 +159,15 @@ Given a version number `MAJOR.MINOR.PATCH`, we increment the:
 
 ## About Mineiros
 
-Mineiros is a [DevOps as a Service][homepage] company based in Berlin, Germany.
-We offer commercial support for all of our projects and encourage you to reach out
-if you have any questions or need help. Feel free to send us an email at [hello@mineiros.io] or join our [Community Slack channel][slack].
+[Mineiros][homepage] is a remote-first company headquartered in Berlin, Germany
+that solves development, automation and security challenges in cloud infrastructure.
 
-We can also help you with:
+Our vision is to massively reduce time and overhead for teams to manage and
+deploy production-grade and secure cloud infrastructure.
 
-- Terraform modules for all types of infrastructure such as VPCs, Docker clusters, databases, logging and monitoring, CI, etc.
-- Consulting & training on AWS, Terraform and DevOps
+We offer commercial support for all of our modules and encourage you to reach out
+if you have any questions or need help. Feel free to email us at [hello@mineiros.io] or join our
+[Community Slack channel][slack].
 
 ## Reporting Issues
 
@@ -140,38 +190,25 @@ Run `make help` to see details on each available target.
 This module is licensed under the Apache License Version 2.0, January 2004.
 Please see [LICENSE] for full details.
 
-Copyright &copy; 2021 [Mineiros GmbH][homepage]
+Copyright &copy; 2020-2022 [Mineiros GmbH][homepage]
+
 
 <!-- References -->
 
 [homepage]: https://mineiros.io/?ref=terraform-github-organization-secret
 [hello@mineiros.io]: mailto:hello@mineiros.io
-[badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-github-organization-secret.svg?label=latest&sort=semver
 [badge-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
-[badge-terraform]: https://img.shields.io/badge/terraform-1.x-623CE4.svg?logo=terraform
-[badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
-[badge-tf-gh]: https://img.shields.io/badge/GH-4.x-F8991D.svg?logo=terraform
-[releases-github-provider]: https://github.com/terraform-providers/terraform-provider-github/releases
 [releases-terraform]: https://github.com/hashicorp/terraform/releases
+[releases-aws-provider]: https://github.com/terraform-providers/terraform-provider-aws/releases
 [apache20]: https://opensource.org/licenses/Apache-2.0
-[slack]: https://join.slack.com/t/mineiros-community/shared_invite/zt-ehidestg-aLGoIENLVs6tvwJ11w9WGg
+[slack]: https://mineiros.io/slack
 [terraform]: https://www.terraform.io
 [aws]: https://aws.amazon.com/
 [semantic versioning (semver)]: https://semver.org/
-
-
-<!-- markdown-link-check-disable -->
-
-[badge-build]: https://github.com/mineiros-io/terraform-github-organization-secret/workflows/CI/CD%20Pipeline/badge.svg
-[build-status]: https://github.com/mineiros-io/terraform-github-organization-secret/actions
-[releases-github]: https://github.com/mineiros-io/terraform-github-organization-secret/releases
-[examples/example/main.tf]: https://github.com/mineiros-io/terraform-github-organization-secret/blob/master/examples/example/main.tf
-[variables.tf]: https://github.com/mineiros-io/terraform-github-organization-secret/blob/master/variables.tf
-[examples/]: https://github.com/mineiros-io/terraform-github-organization-secret/blob/master/examples
+[variables.tf]: https://github.com/mineiros-io/terraform-github-organization-secret/blob/main/variables.tf
+[examples/]: https://github.com/mineiros-io/terraform-github-organization-secret/blob/main/examples
 [issues]: https://github.com/mineiros-io/terraform-github-organization-secret/issues
-[license]: https://github.com/mineiros-io/terraform-github-organization-secret/blob/master/LICENSE
-[makefile]: https://github.com/mineiros-io/terraform-github-organization-secret/blob/master/Makefile
+[license]: https://github.com/mineiros-io/terraform-github-organization-secret/blob/main/LICENSE
+[makefile]: https://github.com/mineiros-io/terraform-github-organization-secret/blob/main/Makefile
 [pull requests]: https://github.com/mineiros-io/terraform-github-organization-secret/pulls
-[contribution guidelines]: https://github.com/mineiros-io/terraform-github-organization-secret/blob/master/CONTRIBUTING.md
-
-<!-- markdown-link-check-enable -->
+[contribution guidelines]: https://github.com/mineiros-io/terraform-github-organization-secret/blob/main/CONTRIBUTING.md
