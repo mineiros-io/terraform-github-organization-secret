@@ -14,9 +14,9 @@ variable "secret_name" {
 # ----------------------------------------------------------------------------------------------------------------------
 
 variable "skip_secret_creation" {
-  description = "(Optional) Set to true to skip creation of the secret resource."
+  description = "(Optional) Define whether to create the secret resource or not. Defaults to creating the secret resource if either plaintext_value or encrypted_value is set."
   type        = bool
-  default     = false
+  default     = null
 }
 
 variable "visibility" {

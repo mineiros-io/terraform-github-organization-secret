@@ -67,9 +67,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - [**`skip_secret_creation`**](#var-skip_secret_creation): *(Optional `bool`)*<a name="var-skip_secret_creation"></a>
 
-  Set to true to skip creation of the secret resource.
-
-  Default is `false`.
+  Define whether to create the secret resource or not. Defaults to creating the secret resource if either `plaintext_value` or `encrypted_value` is set.
 
 - [**`visibility`**](#var-visibility): *(Optional `string`)*<a name="var-visibility"></a>
 
