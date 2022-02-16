@@ -93,9 +93,8 @@ section {
 
       variable "skip_secret_creation" {
         type        = bool
-        default     = false
         description = <<-END
-          Set to true to skip creation of the secret resource.
+          Define whether to create the secret resource or not. Defaults to creating the secret resource if either `plaintext_value` or `encrypted_value` is set.
         END
       }
 
